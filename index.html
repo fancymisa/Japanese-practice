@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>日語練習場</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap">
+<style>
+:root{--bg:#f1f4f9;--card:#fff;--ink:#1c2233;--mut:#6b7390;--acc:#33479a;--acc-t:#e3e8f8;--line:#d9deea;--ok:#1f8a5b;--okb:#dcf3e8;--bad:#c93a5a;--badb:#fbe1e7;--grid:#c7cde0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151f;--card:#1b2030;--ink:#eceff8;--mut:#9aa3c0;--acc:#8fa2f5;--acc-t:#263059;--line:#2d3550;--ok:#5fd09a;--okb:#16382b;--bad:#f27a95;--badb:#3d1b26;--grid:#394263}}
+:root[data-theme="dark"]{--bg:#12151f;--card:#1b2030;--ink:#eceff8;--mut:#9aa3c0;--acc:#8fa2f5;--acc-t:#263059;--line:#2d3550;--ok:#5fd09a;--okb:#16382b;--bad:#f27a95;--badb:#3d1b26;--grid:#394263}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Zen Maru Gothic","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px 14px 48px}
+h1{font-size:26px;margin:8px 0 2px;letter-spacing:.04em}.sub{color:var(--mut);margin:0 0 14px;font-size:14px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+button{font:inherit;color:inherit;cursor:pointer}
+nav button,.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;white-space:nowrap}
+nav button.on,.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+section{display:none;margin-top:14px}section.on{display:block}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.cell{aspect-ratio:1;border:1.5px solid var(--grid);border-radius:6px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:0;
+background-image:linear-gradient(var(--grid),var(--grid)),linear-gradient(var(--grid),var(--grid));background-size:1px 100%,100% 1px;background-position:center,center;background-repeat:no-repeat}
+.cell b{font-size:clamp(26px,8vw,42px);line-height:1;background:var(--card);padding:0 2px;font-weight:700}
+.cell span{font-size:13px;color:var(--acc);background:var(--card);margin-top:2px;padding:0 3px}
+.cell.blank{border-style:dashed;opacity:.35;pointer-events:none}
+.cell.pl{border-color:var(--acc);background-color:var(--acc-t)}
+.hide .cell:not(.rev) span{visibility:hidden}
+.tip{font-size:14px;color:var(--mut)}.tip b{color:var(--ink)}
+.q{font-size:clamp(34px,11vw,60px);text-align:center;margin:10px 0;font-weight:700;line-height:1.2}
+.q small{display:block;font-size:16px;color:var(--mut);font-weight:500}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:2px solid var(--line);background:var(--card);border-radius:12px;padding:14px 8px;font-size:20px;font-weight:700}
+.opt.ok{border-color:var(--ok);background:var(--okb)}.opt.bad{border-color:var(--bad);background:var(--badb)}
+.pri{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:700}
+.ghost{background:none;border:1.5px solid var(--line);border-radius:10px;padding:8px 14px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-bottom:8px}.bar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.v{display:flex;gap:12px;align-items:center;justify-content:space-between}.v .k{font-size:24px;font-weight:700}.v .j{color:var(--mut);font-size:14px}
+.v .zh{font-size:18px}.hz .zh{filter:blur(7px)}.hz .zh.rev{filter:none}
+.say{border:1.5px solid var(--line);background:var(--card);border-radius:50%;width:42px;height:42px;flex:none}
+.stats{display:flex;gap:10px}.stats div{flex:1;text-align:center;background:var(--acc-t);border-radius:12px;padding:8px}.stats b{font-size:26px;display:block;line-height:1.2}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mc{aspect-ratio:1;border:2px solid var(--line);border-radius:10px;background:var(--acc);color:transparent;font-size:30px;font-weight:700}
+.mc.f{background:var(--card);color:var(--ink)}.mc.d{background:var(--okb);border-color:var(--ok);color:var(--ink)}
+.wr{font-size:15px;margin:4px 0}#cfg summary{cursor:pointer}#cfg .chip{padding:3px 10px;font-size:14px}.row>.tip{min-width:3em}.wr em{font-style:normal;color:var(--bad)}
+@media (prefers-reduced-motion:no-preference){.opt,.mc{transition:background .15s,border-color .15s}}
+</style></head><body><main>
+<h1>日語練習場</h1><p class="sub">假名發音、題庫、單字與每日挑戰，進度會存在這台裝置的瀏覽器裡。</p>
+<nav id="nav"><button data-t="kana" class="on">五十音</button><button data-t="quiz">題庫</button><button data-t="vocab">單字</button><button data-t="daily">每日練習</button></nav>
+
+<details class="card" id="cfg" style="display:none" open><summary id="cfs"></summary><div id="cfb" style="margin-top:10px"></div></details>
+
+<section id="kana" class="on">
+<div class="row" id="kc"></div>
+<div class="grid" id="chart"></div>
+<div class="card tip" style="margin-top:12px"><b>點任一格</b>即可聽發音。勾選「隱藏拼音」後，先自己唸，再點格子看答案。<br><b>易混淆：</b>し shi、ち chi、つ tsu、ふ fu 的子音和羅馬拼音字面不同；助詞「は」唸 wa、「を」唸 o。ぢ、づ 與じ、ず 發音相同，平常很少用，這裡不列入。</div>
+</section>
+
+<section id="quiz"><div class="row" id="qm"></div><div id="qbox" class="card"></div></section>
+
+<section id="vocab"><div class="row" id="vc"></div><div id="vl"></div></section>
+
+<section id="daily">
+<div class="stats" id="ds"></div>
+<h3>今日單字</h3><div id="dw"></div>
+<h3>今日挑戰</h3><div class="card" id="dq"><p class="tip" style="margin-top:0">10 題綜合題（聽音、假名、單字）。每天題目固定，完成就累計連續天數。</p><button class="pri" id="dgo">開始今日挑戰</button></div>
+<h3>假名配對</h3><p class="tip" style="margin-top:0">翻牌找出同一個音的配對（兩種文字都選時配平假名與片假名，否則配假名與拼音）。<span id="mv"></span></p><div class="mg" id="mg"></div>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const S={get(){try{return JSON.parse(localStorage.getItem('jp1'))||{}}catch(e){return{}}},set(o){try{localStorage.setItem('jp1',JSON.stringify(o))}catch(e){}}};
+const seeded=s=>{let a=0;for(const c of s)a=(a*31+c.charCodeAt(0))>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}};
+const shuf=(a,r)=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const kata=s=>[...s].map(c=>c>='ぁ'&&c<='ゖ'?String.fromCharCode(c.charCodeAt(0)+96):c).join('');
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ja-JP';u.rate=.8;speechSynthesis.speak(u)}catch(e){}}
+const ROWS={'清音':[["あいうえお","a i u e o"],["かきくけこ","ka ki ku ke ko"],["さしすせそ","sa shi su se so"],["たちつてと","ta chi tsu te to"],["なにぬねの","na ni nu ne no"],["はひふへほ","ha hi fu he ho"],["まみむめも","ma mi mu me mo"],["や・ゆ・よ","ya - yu - yo"],["らりるれろ","ra ri ru re ro"],["わ・・・を","wa - - - wo"],["ん・・・・","n - - - -"]],
+'濁音':[["がぎぐげご","ga gi gu ge go"],["ざじずぜぞ","za ji zu ze zo"],["だ・・でど","da - - de do"],["ばびぶべぼ","ba bi bu be bo"],["ぱぴぷぺぽ","pa pi pu pe po"]]};
+const RN={'清音':['あ行','か行','さ行','た行','な行','は行','ま行','や行','ら行','わ行','ん'],'濁音':['が行','ざ行','だ行','ば行','ぱ行']},ROWLIST=[];
+const K=[];Object.entries(ROWS).forEach(([set,rows])=>rows.forEach(([c,r],ri)=>{const rs=r.split(' '),name=RN[set][ri],ty=name==='ぱ行'?'半濁音':set;ROWLIST.push({name,ty});[...c].forEach((ch,i)=>{if(ch!=='・')K.push({h:ch,k:kata(ch),r:rs[i],row:name,ty})})}));
+const V=[["こんにちは","你好","konnichiwa","問候"],["おはよう","早安","ohayō","問候"],["ありがとう","謝謝","arigatō","問候"],["すみません","不好意思","sumimasen","問候"],["さようなら","再見","sayōnara","問候"],["いただきます","開動了","itadakimasu","問候"],["ただいま","我回來了","tadaima","問候"],
+["かぞく","家人","kazoku","家人"],["おかあさん","媽媽","okāsan","家人"],["おとうさん","爸爸","otōsan","家人"],["こども","小孩","kodomo","家人"],["ともだち","朋友","tomodachi","家人"],
+["みず","水","mizu","飲食"],["おちゃ","茶","ocha","飲食"],["たまご","蛋","tamago","飲食"],["ごはん","飯","gohan","飲食"],["りんご","蘋果","ringo","飲食"],["ぎゅうにゅう","牛奶","gyūnyū","飲食"],["さかな","魚","sakana","飲食"],
+["いぬ","狗","inu","動物"],["ねこ","貓","neko","動物"],["とり","鳥","tori","動物"],
+["がっこう","學校","gakkō","日常"],["でんしゃ","電車","densha","日常"],["ほん","書","hon","日常"],["くるま","汽車","kuruma","日常"],["あめ","雨","ame","日常"],["おかね","錢","okane","日常"],
+["コーヒー","咖啡","kōhī","外來語"],["ジュース","果汁","jūsu","外來語"],["パン","麵包","pan","外來語"],["テレビ","電視","terebi","外來語"],["スマホ","智慧型手機","sumaho","外來語"],["ホテル","飯店","hoteru","外來語"],["トイレ","廁所","toire","外來語"],["ケーキ","蛋糕","kēki","外來語"],["バナナ","香蕉","banana","外來語"]].map(([k,zh,r,c])=>({k,zh,r,c}));
+
+/* practice range settings (quiz / vocab / daily) */
+const CF=Object.assign({sc:['h','k'],ty:['清音','濁音','半濁音'],rows:ROWLIST.map(x=>x.name)},S.get().cf||{});
+const sig=()=>JSON.stringify([CF.sc,CF.ty,CF.rows]),SMALL='ゃゅょっぁぃぅぇぉー';
+const hira=s=>[...s].map(c=>c>='ァ'&&c<='ヶ'?String.fromCharCode(c.charCodeAt(0)-96):c).join('');
+const kp=()=>K.filter(e=>CF.ty.includes(e.ty)&&CF.rows.includes(e.row)),kpool=()=>{const p=kp();return p.length>=4?p:K},scripts=()=>CF.sc.length?CF.sc:['h'];
+const vp=()=>{const ok=new Set(kp().map(e=>e.h));return V.filter(v=>{const w=/^[ァ-ヶ]/.test(v.k)?'k':'h';return CF.sc.includes(w)&&[...hira(v.k)].every(c=>SMALL.includes(c)||ok.has(c))})};
+function cfgChange(){const st=S.get();st.cf=CF;S.set(st);cfgUI();qstart();vocab();dailyWords();dailyReset();match()}
+function cfgUI(){const b=$('#cfb');b.innerHTML='';
+ const grp=(label,items,key)=>{const d=E('div','row');d.appendChild(E('span','tip',label));items.forEach(([v,l])=>{const c=E('button','chip'+(CF[key].includes(v)?' on':''),l);c.onclick=()=>{const i=CF[key].indexOf(v);i>=0?CF[key].splice(i,1):CF[key].push(v);if(key==='sc'&&!CF.sc.length)CF.sc.push(v);cfgChange()};d.appendChild(c)});b.appendChild(d)};
+ grp('文字',[['h','平假名'],['k','片假名']],'sc');
+ grp('音類',[['清音','清音'],['濁音','濁音'],['半濁音','半濁音']],'ty');
+ grp('範圍',ROWLIST.filter(x=>CF.ty.includes(x.ty)).map(x=>[x.name,x.name]),'rows');
+ const q=E('div','row');[['全選',1],['清除',0]].forEach(([t,all])=>{const c=E('button','ghost',t);c.onclick=()=>{CF.rows=all?ROWLIST.map(x=>x.name):[];cfgChange()};q.appendChild(c)});b.appendChild(q);
+ const n=kp().length,m=vp().length;
+ $('#cfs').innerHTML='<b>練習範圍</b>　'+CF.sc.map(x=>x==='h'?'平假名':'片假名').join('＋')+'・'+(CF.ty.join('、')||'未選音類')+'・'+n+' 個假名・'+m+' 個單字'+(n<4?'<br><span style="color:var(--bad)">範圍少於 4 個假名，暫時使用全部假名出題。</span>':'')}
+
+/* tabs */
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#nav button,section').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#'+b.dataset.t).classList.add('on');$('#cfg').style.display=b.dataset.t==='kana'?'none':'block'});
+function chips(box,items,cur,fn){box.innerHTML='';items.forEach(([v,l])=>{const b=E('button','chip'+(v===cur?' on':''),l);b.onclick=()=>{[...box.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');fn(v)};box.appendChild(b)})}
+
+/* kana chart */
+let sc='h',set='清音',hid=false;
+function chart(){const c=$('#chart');c.className='grid'+(hid?' hide':'');c.innerHTML='';
+ ROWS[set].forEach(([ch,r])=>{const rs=r.split(' ');[...ch].forEach((k,i)=>{if(k==='・'){c.appendChild(E('div','cell blank'));return}
+  const kk=sc==='h'?k:kata(k),b=E('button','cell','<b>'+kk+'</b><span>'+rs[i]+'</span>');
+  b.onclick=()=>{say(kk);c.querySelectorAll('.pl').forEach(x=>x.classList.remove('pl'));b.classList.add('pl','rev')};c.appendChild(b)})})}
+const kc=$('#kc'),a1=E('div'),a2=E('div'),a3=E('label','chip','<input type="checkbox"> 隱藏拼音');
+[a1,a2].forEach(x=>{x.style.display='flex';x.style.gap='6px'});kc.append(a1,a2,a3);
+chips(a1,[['h','平假名'],['k','片假名']],sc,v=>{sc=v;chart()});chips(a2,[['清音','清音'],['濁音','濁音・半濁音']],set,v=>{set=v;chart()});
+a3.querySelector('input').onchange=e=>{hid=e.target.checked;chart()};chart();
+
+/* quiz engine */
+function mk(mode,r){const pick=a=>a[Math.floor(r()*a.length)];
+ if(mode==='mix')mode=pick(['k2r','r2k','listen','v','v2']);
+ if(['k2r','r2k','listen'].includes(mode)){const P=kpool(),e=pick(P),SC=scripts(),s=SC[Math.floor(r()*SC.length)],ans=mode==='k2r'?e.r:e[s];
+  const pool=[...new Set(P.map(x=>mode==='k2r'?x.r:x[s]))].filter(x=>x!==ans),o=shuf([ans,...shuf(pool,r).slice(0,3)],r);
+  if(mode==='k2r')return{p:e[s],t:'這個假名怎麼唸？',o,a:ans,say:e[s]};
+  if(mode==='r2k')return{p:e.r,t:'選出對應的'+(s==='h'?'平假名':'片假名'),o,a:ans};
+  return{p:'🔊',t:'聽發音，選出你聽到的假名',o,a:ans,say:ans,auto:1}}
+ const VF=vp();if(!VF.length)return mk('k2r',r);const v=pick(VF);
+ const dv=(f,a)=>{const seen=new Set([a]),out=[];[...shuf(VF,r),...shuf(V,r)].forEach(x=>{const k=f(x);if(!seen.has(k)){seen.add(k);out.push(k)}});return out.slice(0,3)};
+ if(mode==='v'){const o=shuf([v.zh,...dv(x=>x.zh,v.zh)],r);return{p:v.k,sub:v.r,t:'這個單字的意思是？',o,a:v.zh,say:v.k}}
+ const o=shuf([v.k,...dv(x=>x.k,v.k)],r);return{p:v.zh,t:'選出對應的日文單字',o,a:v.k}}
+function run(box,qs,done){let i=0,s=0,wr=[];
+ (function show(){if(i>=qs.length){box.innerHTML='<div class="q">'+s+' / '+qs.length+'</div><p style="text-align:center">'+(s===qs.length?'全對！':'答錯的題目如下，再練一次會更熟。')+'</p>'+wr.map(w=>'<div class="wr">'+w.p+(w.sub?'（'+w.sub+'）':'')+' → <b>'+w.a+'</b>　<em>你選了 '+w.c+'</em></div>').join('');done(s,box);return}
+  const q=qs[i];box.innerHTML='<div class="bar"><i style="width:'+i/qs.length*100+'%"></i></div><div class="tip">第 '+(i+1)+' / '+qs.length+' 題　得分 '+s+'</div><div class="tip" style="text-align:center">'+q.t+'</div><div class="q">'+q.p+(q.sub?'<small>'+q.sub+'</small>':'')+'</div>';
+  if(q.say){const b=E('button','ghost','🔊 再聽一次');b.style.cssText='display:block;margin:0 auto 12px';b.onclick=()=>say(q.say);box.appendChild(b);if(q.auto)setTimeout(()=>say(q.say),250)}
+  const g=E('div','opts');box.appendChild(g);let lock=0;
+  q.o.forEach(o=>{const b=E('button','opt',o);b.onclick=()=>{if(lock)return;lock=1;
+   if(o===q.a){s++;b.classList.add('ok')}else{b.classList.add('bad');[...g.children].find(x=>x.textContent===q.a).classList.add('ok');wr.push({p:q.p,sub:q.sub,a:q.a,c:o})}
+   if(q.say&&!q.auto)say(q.say);const n=E('button','pri',i+1>=qs.length?'看結果':'下一題');n.style.cssText='display:block;margin:14px auto 0';n.onclick=()=>{i++;show()};box.appendChild(n);n.focus()};g.appendChild(b)})})()}
+let qmode='mix';
+function qstart(){const r=Math.random,qs=Array.from({length:10},()=>mk(qmode,r));run($('#qbox'),qs,(s,box)=>{const b=E('button','pri','再來一輪');b.style.cssText='display:block;margin:14px auto 0';b.onclick=qstart;box.appendChild(b)})}
+chips($('#qm'),[['mix','綜合'],['k2r','假名→拼音'],['r2k','拼音→假名'],['listen','聽音選字'],['v','單字→中文'],['v2','中文→單字']],qmode,v=>{qmode=v;qstart()});qstart();
+
+/* vocab */
+let vcat='全部',hz=false;
+function vocab(){const l=$('#vl');l.className=hz?'hz':'';l.innerHTML='';const L=vp().filter(v=>vcat==='全部'||v.c===vcat);if(!L.length)l.innerHTML='<p class="tip">目前的文字與範圍沒有符合的單字，請在上方放寬範圍。</p>';L.forEach(v=>{const d=E('div','card v','<div><div class="k">'+v.k+'</div><div class="j">'+v.r+'</div></div><div class="zh">'+v.zh+'</div>');
+ const z=d.querySelector('.zh');z.onclick=()=>z.classList.toggle('rev');const b=E('button','say','🔊');b.onclick=()=>say(v.k);d.appendChild(b);l.appendChild(d)})}
+const vc=$('#vc'),vb=E('div'),vh=E('label','chip','<input type="checkbox"> 遮住中文（點擊顯示）');vb.style.cssText='display:flex;gap:6px;flex-wrap:wrap';vc.append(vb,vh);
+chips(vb,['全部','問候','家人','飲食','動物','日常','外來語'].map(x=>[x,x]),vcat,v=>{vcat=v;vocab()});vh.querySelector('input').onchange=e=>{hz=e.target.checked;vocab()};vocab();
+
+/* daily */
+const dk=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=dk(new Date()),yd=dk(new Date(Date.now()-864e5));
+function stats(){const st=S.get(),td=st.today&&st.today.d===today;$('#ds').innerHTML='<div><b>'+(st.last===today||st.last===yd?st.streak||0:0)+'</b>連續天數</div><div><b>'+(td?st.today.s+'/10':'–')+'</b>今日成績</div><div><b>'+(st.best||0)+'</b>最佳成績</div>'}
+stats();
+function dailyWords(){const r=seeded(today+'w'+sig()),L=vp();$('#dw').innerHTML=L.length?'':'<p class="tip">目前範圍沒有符合的單字。</p>';shuf(L,r).slice(0,3).forEach(v=>{const d=E('div','card v','<div><div class="k">'+v.k+'</div><div class="j">'+v.r+'</div></div><div class="zh">'+v.zh+'</div>');const b=E('button','say','🔊');b.onclick=()=>say(v.k);d.appendChild(b);$('#dw').appendChild(d)})}dailyWords();
+function daily(){const r=seeded(today+'q'+sig()),m=['listen','k2r','r2k','v','v2','listen','k2r','v','r2k','v2'],qs=m.map(x=>mk(x,r));
+ run($('#dq'),qs,(s,box)=>{const st=S.get();if(st.last!==today){st.streak=st.last===yd?(st.streak||0)+1:1;st.last=today}
+  if(!st.today||st.today.d!==today||s>st.today.s)st.today={d:today,s};st.best=Math.max(st.best||0,s);S.set(st);stats();
+  const b=E('button','pri','再練一次');b.style.cssText='display:block;margin:14px auto 0';b.onclick=daily;box.appendChild(b)})}
+$('#dgo').onclick=daily;
+function dailyReset(){$('#dq').innerHTML='<p class="tip" style="margin-top:0">10 題綜合題（聽音、假名、單字），範圍依上方設定。同樣的設定每天題目固定，完成就累計連續天數。</p><button class="pri" id="dgo">開始今日挑戰</button>';$('#dgo').onclick=daily}
+/* matching */
+function match(){const r=Math.random,ps=shuf(kpool(),r).slice(0,6),both=CF.sc.length>1,cs=shuf(ps.flatMap(p=>both?[{id:p.r,t:p.h},{id:p.r,t:p.k}]:[{id:p.r,t:p[CF.sc[0]]},{id:p.r,t:p.r}]),r),g=$('#mg');g.innerHTML='';let open=[],mv=0,dn=0;$('#mv').textContent='';
+ cs.forEach(c=>{const b=E('button','mc',c.t);b.onclick=()=>{if(open.length>1||b.classList.contains('f')||b.classList.contains('d'))return;b.classList.add('f');if(c.t!==c.id)say(c.t);open.push([b,c]);
+  if(open.length===2){mv++;const[[b1,c1],[b2,c2]]=open;if(c1.id===c2.id&&b1!==b2){b1.classList.replace('f','d');b2.classList.replace('f','d');open=[];if(++dn===ps.length){$('#mv').textContent=' 完成！共 '+mv+' 步。點任一牌重新開始。';g.querySelectorAll('.mc').forEach(x=>x.onclick=match)}}else setTimeout(()=>{b1.classList.remove('f');b2.classList.remove('f');open=[]},800)}};g.appendChild(b)})}
+match();
+cfgUI();
+</script></body></html>
